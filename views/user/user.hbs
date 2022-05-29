@@ -1,0 +1,659 @@
+<script>
+    function editUser(id,fullName, email,role,SDT,GT,DateOfBirth) {
+        document.getElementById("UpdateFullName").value = fullName;
+        document.getElementById("UpdateID").value = id;
+        document.getElementById("UpdateEmail").value = email;
+        document.getElementById("UpdateSDT").value = SDT;
+        document.getElementById("UpdateDate").value = DateOfBirth;
+        if (role.toString() === "Admin") {
+            document.getElementById("UpdateRole").value = "Admin";
+        } else {
+            document.getElementById("UpdateRole").value = "User";
+        }
+        if (GT.toString() === "Nam") {
+            document.getElementById("UpdateRadioNam").checked = true;
+        } else {
+            document.getElementById("UpdateRadioNu").checked = true;
+        }
+    }
+    function deleteUser(id) {
+        document.getElementById("DpInputID").value = id;
+    }
+    function rePass(id) {
+        document.getElementById("RePassID").value = id;
+    }
+    function showInfo(avatar,fullName, email,role,SDT,GT,DateOfBirth) {
+        document.getElementById("InfoName").value = fullName;
+        document.getElementById("InfoAvatar").src = avatar;
+        document.getElementById("InfoEmail").value = email;
+        document.getElementById("InfoRole").value = role;
+        document.getElementById("InfoSDT").value = SDT;
+        document.getElementById("InfoGT").value = GT;
+        document.getElementById("InfoDate").value = DateOfBirth;
+    }
+</script>
+<div class="content">
+    <div style="width: 100%">
+        <form class="d-flex mb-4 mt-3" method="POST" style="width: 500px;margin: auto">
+            <input class="form-control me-2" type="search" placeholder="Tìm kiếm người dùng" aria-label="Search" name="searchUser">
+            <button class="btn btn-outline-success" type="submit" style="width: 150px">Tìm Kiếm</button>
+        </form>
+    </div>
+    {{#if msg}}
+        {{{msg}}}
+    {{/if}}
+    <div class="row" style="display: contents;">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Họ và tên</th>
+                <th scope="col">Email</th>
+                <th scope="col">Quyền hạn</th>
+                <th scope="col">Thông tin chi tiết</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each user}}
+                <tr>
+                    <td>{{this._id}}</td>
+                    <td>{{this.FullName}}</td>
+                    <td>{{this.Email}}</td>
+                    <td>{{this.Role}}</td>
+                    <td><button
+                            type="button"
+                            class="btn btn-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#InfoModal"
+                            onclick="showInfo('{{this.Avatar}}','{{this.FullName}}','{{this.Email}}','{{this.Role}}','{{this.PhoneNumber}}','{{this.GT}}','{{this.DateOfBirth}}')"
+                    >
+                        Xem thông tin chi tiết
+                    </button></td>
+                    <td>
+                        <button
+                                type="button"
+                                class="btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#UpdateModal"
+                                onclick="editUser('{{this._id}}','{{this.FullName}}','{{this.Email}}','{{this.Role}}','{{this.PhoneNumber}}','{{this.GT}}','{{this.DateOfBirth}}')"
+                        >
+                            Sửa
+                        </button>
+                        <button
+                                type="button"
+                                class="btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#DeleteModal"
+                                onclick="deleteUser('{{this._id}}')"
+                        >
+                            Xóa
+                        </button>
+                        <button
+                                type="button"
+                                class="btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#RePass"
+                                onclick="rePass('{{this._id}}')"
+                        >
+                            Đổi mật khẩu
+                        </button>
+                    </td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+        <!-- Button add user -->
+        <div class="row" style="margin: auto;">
+            <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#addModal"
+            >
+                Thêm người dùng
+            </button>
+        </div>
+        <!-- Modal add-->
+        <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+            <div class="modal-dialog">
+                <form action="/user/add" method="POST" autocomplete="off" enctype="multipart/form-data">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Thêm User</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-auto">
+                                <div class="mb-3 row">
+                                    <label
+                                            for="InputFullName"
+                                            class="col-sm-3 col-form-label"
+                                    >Họ và tên</label>
+                                    <div class="col-sm-9">
+                                        <input  name="FullName"
+                                                type="text"
+                                                class="form-control text-dark"
+                                                id="InputFullName"
+                                                placeholder="Họ và tên" required/>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label
+                                            for="staticEmail"
+                                            class="col-sm-3 col-form-label"
+                                    >Email</label>
+                                    <div class="col-sm-9">
+                                        <input  name="Email"
+                                                type="text"
+                                                class="form-control text-dark"
+                                                id="staticEmail"
+                                                placeholder="email@example.com"
+                                                required/>
+                                    </div>
+                                </div>
+
+                                <fieldset class="row mb-3 mt-3">
+                                    <legend class="col-form-label col-sm-4 pt-0">Giới tính</legend>
+                                    <div class="col-sm-8 row">
+                                        <div class="form-check col-sm-4">
+                                            <input class="form-check-input" type="radio" name="radioGT" id="Nam" value="Nam" checked>
+                                            <label class="form-check-label" for="gridRadios1">
+                                                Nam
+                                            </label>
+                                        </div>
+                                        <div class="form-check col-sm-4">
+                                            <input class="form-check-input" type="radio" name="radioGT" id="Nu" value="Nữ">
+                                            <label class="form-check-label" for="gridRadios2">
+                                                Nữ
+                                            </label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="mb-3 row">
+                                    <label
+                                            for="AddDate"
+                                            class="col-sm-3 col-form-label"
+                                    >Ngày sinh</label>
+                                    <div class="col-sm-9"><input type="date" id="AddDate" name="AddDate"
+                                               class="form-control text-dark"
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label
+                                            for="InputFullName"
+                                            class="col-sm-3 col-form-label"
+                                    >SĐT</label>
+                                    <div class="col-sm-9">
+                                        <input  name="SDT"
+                                                type="text"
+                                                class="form-control text-dark"
+                                                id="InputSDT"
+                                                placeholder="Số điện Thoại"
+                                                required/>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label
+                                            for="staticPassword"
+                                            class="col-sm-3 col-form-label"
+                                    >Mật khẩu</label>
+                                    <div class="col-sm-9">
+                                        <input
+                                                name="Password"
+                                                type="password"
+                                                class="form-control text-dark"
+                                                id="staticPassword"
+                                                placeholder="MK"
+                                                required
+                                        />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label
+                                            for="staticCPassword"
+                                            class="col-sm-3 col-form-label"
+                                    >Nhập lại MK</label>
+                                    <div class="col-sm-9 col-form-label">
+                                        <input
+                                                name="CPassword"
+                                                type="password"
+                                                class="form-control text-dark"
+                                                id="staticCPassword"
+                                                placeholder="Confirm password"
+                                                required
+                                        />
+                                    </div>
+                                </div>
+                                <div class="mb-1 row ">
+                                    <label class="col-sm-3 col-form-label" >Quyền hạn</label>
+                                    <div class="col-sm-9 col-form-label form-select-lg">
+                                        <label>
+                                            <select id="RoleAdd" name="AddRole">
+                                                <option value="Admin">Admin</option>
+                                                <option value="User">User</option>
+                                            </select>
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="mb-3">
+                                    <label for="formFile" class="col-sm-3 col-form-label">Ảnh đại diện</label>
+                                    <input class="form-control col-sm-9 col-form-label" type="file" id="InputAvatar" name="Avatar" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                            >Close
+                            </button>
+                            <button
+                                    type="submit"
+                                    class="btn btn-primary">
+                                Save changes
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Modal update-->
+        <div
+                class="modal fade"
+                id="UpdateModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <form action="/user/edit" method="POST" autocomplete="off" accept-charset="UTF-8" enctype="multipart/form-data">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Sửa</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-auto">
+                                <div class="mb-3 row">
+                                    <label for="UpdateID" class="col-sm-2 col-form-label">ID:</label>
+                                    <div class="col-sm-10">
+                                        <input
+                                                name="UpdateID"
+                                                readonly
+                                                type="text"
+                                                class="form-control text-dark"
+                                                id="UpdateID"
+                                                placeholder="ID"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label
+                                            for="InputFullName"
+                                            class="col-sm-3 col-form-label"
+                                    >Họ và tên</label>
+                                    <div class="col-sm-9">
+                                        <input  name="UpdateFullName"
+                                                type="text"
+                                                class="form-control text-dark"
+                                                id="UpdateFullName"
+                                                placeholder="Họ và tên" required/>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label
+                                            for="UpdateEmail"
+                                            class="col-sm-3 col-form-label"
+                                    >Email</label>
+                                    <div class="col-sm-9">
+                                        <input  name="UpdateEmail"
+                                                type="text"
+                                                class="form-control text-dark"
+                                                id="UpdateEmail"
+                                                placeholder="email@example.com"
+                                                required/>
+                                    </div>
+                                </div>
+
+                                <fieldset class="row mb-3 mt-3">
+                                    <legend class="col-form-label col-sm-4 pt-0">Giới tính</legend>
+                                    <div class="col-sm-8 row">
+                                        <div class="form-check col-sm-4">
+                                            <input class="form-check-input" type="radio" name="UpdateRadioGT" id="UpdateRadioNam" value="Nam" checked>
+                                            <label class="form-check-label" for="gridRadios1">
+                                                Nam
+                                            </label>
+                                        </div>
+                                        <div class="form-check col-sm-4">
+                                            <input class="form-check-input" type="radio" name="UpdateRadioGT" id="UpdateRadioNu" value="Nữ">
+                                            <label class="form-check-label" for="gridRadios2">
+                                                Nữ
+                                            </label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="mb-3 row">
+                                    <label
+                                            for="UpdateDate"
+                                            class="col-sm-3 col-form-label"
+                                    >Ngày sinh</label>
+                                    <div class="col-sm-9"><input type="date" id="UpdateDate" name="UpdateDate"
+                                                                 class="form-control text-dark"
+                                                                 required>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label
+                                            for="UpdateSDT"
+                                            class="col-sm-3 col-form-label"
+                                    >SĐT</label>
+                                    <div class="col-sm-9">
+                                        <input  name="UpdateSDT"
+                                                type="text"
+                                                class="form-control text-dark"
+                                                id="UpdateSDT"
+                                                placeholder="Số điện Thoại"
+                                                required/>
+                                    </div>
+                                </div>
+                                <div class="mb-1 row ">
+                                    <label class="col-sm-3 col-form-label" >Quyền hạn</label>
+                                    <div class="col-sm-9 col-form-label form-select-lg">
+                                        <label>
+                                            <select id="UpdateRole" name="UpdateRole">
+                                                <option value="Admin">Admin</option>
+                                                <option value="User">User</option>
+                                            </select>
+                                        </label>
+                                    </div>
+
+                                </div>
+<!--                                <div class="mb-3">-->
+<!--                                    <label for="UpdateAvatar" class="col-sm-3 col-form-label">Ảnh đại diện</label>-->
+<!--                                    <input class="form-control col-sm-9 col-form-label" type="file" id="UpdateAvatar" name="UpdateAvatar">-->
+<!--                                </div>-->
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                            >Đóng
+                            </button>
+                            <button
+                                    type="submit"
+                                    class="btn btn-primary">
+                                Sửa
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Modal Delete-->
+        <div
+                class="modal fade"
+                id="DeleteModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <form action="/user/delete" method="POST" autocomplete="off">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Xóa User</h5>
+                            <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-auto">
+                                <div class="mb-3 row">
+                                    <label for="DpInputID" class="col-sm-2 col-form-label">ID:</label>
+                                    <div class="col-sm-10">
+                                        <input
+                                                name="DpInputID"
+                                                readonly
+                                                type="text"
+                                                class="form-control text-dark"
+                                                id="DpInputID"
+                                                placeholder="ID"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button
+                                            type="button"
+                                            class="btn btn-secondary"
+                                            data-bs-dismiss="modal"
+                                    >No
+                                    </button>
+                                    <button
+                                            type="submit"
+                                            class="btn btn-primary"
+                                            data-bs-dismiss="modal"
+                                    >Yes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Modal re pass-->
+        <div
+                class="modal fade"
+                id="RePass"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <form action="/user/repass" method="POST" autocomplete="off">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Đổi mật khẩu</h5>
+                            <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-auto">
+                                <div class="mb-3 row">
+                                    <label for="RePassID" class="col-sm-4 col-form-label">ID:</label>
+                                    <div class="col-sm-8 ">
+                                        <input
+
+                                                name="RePassID"
+                                                readonly
+                                                type="text"
+                                                class="form-control text-dark "
+                                                id="RePassID"
+                                                placeholder="ID"
+
+                                        />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label
+                                            for="UpInputPassword"
+                                            class="col-sm-4 col-form-label"
+                                    >Mật khẩu cũ</label>
+                                    <div class="col-sm-8">
+                                        <input
+                                                name="OldPass"
+                                                type="password"
+                                                class="form-control text-dark"
+                                                id="OldPass"
+                                                placeholder="Mật khẩu cũ"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label
+                                            for="UpInputPassword"
+                                            class="col-sm-4 col-form-label"
+                                    >Mật khẩy mới</label>
+                                    <div class="col-sm-8">
+                                        <input
+                                                name="NewPassword"
+                                                type="password"
+                                                class="form-control text-dark"
+                                                id="NewPass"
+                                                placeholder="Mật khẩu mới"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label
+                                            for="CFNewPass"
+                                            class="col-sm-4 col-form-label"
+                                    >Nhập lại mật khẩu mới</label>
+                                    <div class="col-sm-8">
+                                        <input
+                                                name="CFNewPass"
+                                                type="password"
+                                                class="form-control text-dark"
+                                                id="CFNewPass"
+                                                placeholder="Nhập mại mật khẩu mới"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                            >Đóng
+                            </button>
+                            <button
+                                    type="submit"
+                                    class="btn btn-primary">
+                                Đổi
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Modal info-->
+        <div
+                class="modal fade"
+                id="InfoModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <form  autocomplete="off">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Thông tin chi tiết</h5>
+                            <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-auto">
+                                <div class="mb-3 row">
+                                    <img style="width: 50px;height: 50px" src="" class="card-img-top card-img-top mt-2" id="InfoAvatar">
+                                </div>
+                                <div class="mb-3 row">
+                                    <label
+                                            for="InfoName"
+                                            class="col-sm-3 col-form-label"
+                                    >Họ và Tên:</label>
+                                    <div class="col-sm-9">
+                                        <input
+                                                readonly
+                                                name="InfoName"
+                                                type="text"
+                                                class="form-control-plaintext text-dark"
+                                                id="InfoName"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label
+                                            for="InfoEmail"
+                                            class="col-sm-3 col-form-label"
+                                    >Email:</label>
+                                    <div class="col-sm-9">
+                                        <input name="InfoEmail" readonly type="text" class="form-control-plaintext text-dark" id="InfoEmail" placeholder="email@example.com"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label
+                                            for="InfoGT"
+                                            class="col-sm-3 col-form-label"
+                                    >Giới tính:</label>
+                                    <div class="col-sm-9">
+                                        <input readonly name="InfoGT" type="text" class="form-control-plaintext text-dark" id="InfoGT" placeholder="InfoGT"/>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label
+                                            for="InfoDate"
+                                            class="col-sm-3 col-form-label"
+                                    >Ngày sinh:</label>
+                                    <div class="col-sm-9">
+                                        <input readonly name="InfoDate" type="text" class="form-control-plaintext text-dark" id="InfoDate" placeholder="InfoDate"/>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label
+                                            for="InfoSDT"
+                                            class="col-sm-3 col-form-label"
+                                    >SDT:</label>
+                                    <div class="col-sm-9">
+                                        <input readonly name="InfoSDT" type="text" class="form-control-plaintext text-dark" id="InfoSDT" placeholder="InfoSDT"/>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label
+                                            for="InfoRole"
+                                            class="col-sm-3 col-form-label"
+                                    >Quyền hạn:</label>
+                                    <div class="col-sm-9">
+                                        <input readonly name="InfoRole" type="text" class="form-control-plaintext text-dark" id="InfoRole" placeholder="InfoRole"/>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                            >Đóng
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

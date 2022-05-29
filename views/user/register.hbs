@@ -1,0 +1,90 @@
+<main   style="display: flex; flex-direction: column;align-items: center">
+    <form action="" method="post"class=" col-12  col-sm-8 col-md-6">
+        <div class="modal-body">
+            <div class="formAdd" >
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Pham Van A"
+                           name="FullName">
+                    <label for="floatingInput">Họ Và Tên</label>
+                </div>
+
+
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+                           name="Email">
+                    <label for="floatingInput">Email</label>
+                </div>
+
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="InputSDT" placeholder="UserName"
+                           name="SDT">
+                    <label for="floatingInput">SĐT</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control"
+                           type="password"
+                           name="password"
+                           placeholder="Password"
+                           required="required">
+                    <label for="floatingPassword">Password</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control"
+                           type="password"
+                           name="passwordCF"
+                           placeholder="Password"
+                           required="required">
+                    <label for="floatingPassword">Confirm Password</label>
+                </div>
+                <fieldset class="row mb-3 mt-3">
+                    <legend class="col-form-label col-sm-3 pt-0">Giới tính</legend>
+                    <div class="col-sm-9 row">
+                        <div class="form-check col-4">
+                            <input class="form-check-input" type="radio" name="radioGT" id="Nam" value="Nam" checked>
+                            <label class="form-check-label" for="gridRadios1">
+                                Nam
+                            </label>
+                        </div>
+                        <div class="form-check col-4">
+                            <input class="form-check-input" type="radio" name="radioGT" id="Nu" value="Nữ">
+                            <label class="form-check-label" for="gridRadios2">
+                                Nữ
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="mb-3 row">
+                    <label
+                            for="AddDate"
+                            class="col-sm-2 col-form-label"
+                    >Ngày sinh</label>
+                    <div class="col-sm-10"><input type="date" id="AddDate" name="AddDate"
+                                                  class="form-control text-dark"
+                                                  required>
+                    </div>
+                </div>
+
+                <div class="form-floating">
+                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example" id="RoleAdd" name="AddRole">
+                        <option value="Admin">Admin</option>
+                        <option value="User">User</option>
+                    </select>
+                    <label for="floatingSelect">Role</label>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-12 row" style="text-align: center">
+            <Button type="submit" class="btn btn-primary btn-block btn-large col-4 ms-5">
+                Đăng Kí
+            </Button>
+            <p class="col-7 text-center" style="height: 100%;text-align: center">Bạn đã có tài khoản? <a href="/login" style="text-decoration: none">Đăng nhập</a></p>
+        </div>
+    </form>
+</main>
+
+
+
