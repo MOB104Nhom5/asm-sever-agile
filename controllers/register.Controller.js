@@ -5,7 +5,7 @@ exports.postRegister = async (req,res,next)=>{
     if(req.body.password !== req.body.passwordCF){
         return res.render('./user/register.hbs',{msg:'Mat khau khong trung khop', body: req.body});
     }
-    var role= req.body.AddRole;
+    var role= "User";
     const salt = await bcrypt.genSalt(10);
     let objUser = {
         FullName: req.body.FullName,
