@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
@@ -15,13 +14,10 @@ router.get('/user',function (req,res,next) {
             if (err){
                 res.sendStatus(500)
                 console.log(err)
-            }else {
-                res.send(User)
-            }
+            }else { res.send(User) }
         }
     )
 });
-
 router.get('/Comics', ApiController.getComicsList);
 router.get('/Comics/:id', ApiController.getComics);
 router.get('/user/profile',auth,ApiController.getProfile );

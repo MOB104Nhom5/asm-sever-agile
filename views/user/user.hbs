@@ -65,8 +65,8 @@
                             class="btn btn-primary"
                             data-bs-toggle="modal"
                             data-bs-target="#InfoModal"
-                            onclick="showInfo('{{this.Avatar}}','{{this.FullName}}','{{this.Email}}','{{this.Role}}','{{this.PhoneNumber}}','{{this.GT}}','{{this.DateOfBirth}}')"
-                    >
+                            onclick="showInfo('{{this.Avatar}}','{{this.FullName}}','{{this.Email}}'
+                                    ,'{{this.Role}}','{{this.PhoneNumber}}','{{this.GT}}','{{this.DateOfBirth}}')">
                         Xem thông tin chi tiết
                     </button></td>
                     <td>
@@ -262,13 +262,7 @@
             </div>
         </div>
         <!-- Modal update-->
-        <div
-                class="modal fade"
-                id="UpdateModal"
-                tabindex="-1"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-        >
+        <div class="modal fade" id="UpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
             <div class="modal-dialog">
                 <form action="/user/edit" method="POST" autocomplete="off" accept-charset="UTF-8" enctype="multipart/form-data">
                     <div class="modal-content">
@@ -396,13 +390,7 @@
             </div>
         </div>
         <!-- Modal Delete-->
-        <div
-                class="modal fade"
-                id="DeleteModal"
-                tabindex="-1"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-        >
+        <div class="modal fade" id="DeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
             <div class="modal-dialog">
                 <form action="/user/delete" method="POST" autocomplete="off">
                     <div class="modal-content">
@@ -451,13 +439,7 @@
             </div>
         </div>
         <!-- Modal re pass-->
-        <div
-                class="modal fade"
-                id="RePass"
-                tabindex="-1"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-        >
+        <div class="modal fade" id="RePass" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
             <div class="modal-dialog">
                 <form action="/user/repass" method="POST" autocomplete="off">
                     <div class="modal-content">
@@ -552,13 +534,7 @@
             </div>
         </div>
         <!-- Modal info-->
-        <div
-                class="modal fade"
-                id="InfoModal"
-                tabindex="-1"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-        >
+        <div class="modal fade" id="InfoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
             <div class="modal-dialog">
                 <form  autocomplete="off">
                     <div class="modal-content">

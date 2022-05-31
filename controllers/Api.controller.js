@@ -2,7 +2,6 @@ const comicsModel = require("../models/comics.models");
 const User = require("../models/user.models");
 
 const bcrypt = require("bcrypt");
-
 exports.getComicsList = async (req, res, next) => {
     const comicsList = await comicsModel.find({});
     console.log(comicsList);

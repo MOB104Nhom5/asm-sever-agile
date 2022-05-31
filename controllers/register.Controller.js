@@ -1,24 +1,18 @@
 const User = require("../models/user.models");
 const bcrypt = require("bcrypt");
-exports.register=(req,res,next)=>{
-    res.render('./user/register')
-}
+exports.register=(req,res,next)=>{res.render('./user/register')}
 exports.postRegister = async (req,res,next)=>{
     if(req.body.password !== req.body.passwordCF){
         return res.render('./user/register.hbs',{msg:'Mat khau khong trung khop', body: req.body});
     }
     var role= req.body.AddRole;
     const salt = await bcrypt.genSalt(10);
-    console.log(salt)
-    let dateOfBirth = req.body.AddDate;
-
-
     let objUser = {
         FullName: req.body.FullName,
         Password:await bcrypt.hash(req.body.password, salt) ,
         Email:req.body.Email,
         GT:req.body.radioGT,
-        DateOfBirth:dateOfBirth,
+        DateOfBirth:req.body.AddDate,
         PhoneNumber:req.body.SDT,
         Role: role,
     }
@@ -29,7 +23,6 @@ exports.postRegister = async (req,res,next)=>{
         else{
             console.log("đăng kí thành công và đã ghi vào db")
         }
-
     })
     res.redirect('/login')
 }

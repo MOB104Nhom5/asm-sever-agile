@@ -31,7 +31,6 @@ exports.postAddUser = async (req,res,next)=>{
 
     let dateOfBirth = req.body.AddDate;
     const salt = await bcrypt.genSalt(10);
-
     if(req.body.Password !== req.body.CPassword){
         return res.render('./user/user',{msg:'<div class="alert alert-danger" role="alert">\n' +
                 ' Thêm thất bại! Do nhập lại mật khaảu không trùng khớp' +
@@ -61,7 +60,6 @@ exports.postUpdateUser = async (req,res,next)=>{;
     let dieuKien = {_id: req.body.UpdateID};
     const role = req.body.UpdateRole;
     const salt = await bcrypt.genSalt(10);
-
     let duLieu= {
         FullName: req.body.UpdateFullName,
         Email: req.body.UpdateEmail,
@@ -92,7 +90,6 @@ exports.postUpdatePass = async (req,res,next)=>{
         return res.render('./user/user',{msg:'<div class="alert alert-danger" role="alert">\n' +
                 ' Đổi mật khẩu thất bại! Do mật cũ không đúng' +
                 '</div>', body: req.body,user :listUser});
-
     }else if (req.body.NewPassword != req.body.CFNewPass) {
         return res.render('./user/user', {
             msg: '<div class="alert alert-danger" role="alert">\n' +
@@ -100,10 +97,7 @@ exports.postUpdatePass = async (req,res,next)=>{
                 '</div>', body: req.body, user: listUser
         });
     }
-
-    let duLieu= {
-        Password: await bcrypt.hash(req.body.NewPassword,salt)
-    };
+    let duLieu= { Password: await bcrypt.hash(req.body.NewPassword,salt) };
     UserModel.updateOne(dieuKien, duLieu, function (err,res) {
         if (err) {
             console.log(err);
@@ -111,7 +105,6 @@ exports.postUpdatePass = async (req,res,next)=>{
         else {
             console.log("Success");
         }
-
     });
     res.redirect('/user');
 }
