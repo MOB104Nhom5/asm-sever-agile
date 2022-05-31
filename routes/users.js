@@ -12,5 +12,6 @@ router.post('/add',uploadLogo.single('Avatar'),userController.postAddUser)
 router.post('/edit',uploadLogo.single('Avatar'),userController.postUpdateUser)
 router.post('/repass',userController.postUpdatePass)
 router.post('/delete',userController.postDeleteUser)
+router.post('/search',userController.postSearch)
 
 module.exports = router;

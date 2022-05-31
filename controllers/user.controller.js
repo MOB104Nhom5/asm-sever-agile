@@ -128,6 +128,30 @@ exports.postDeleteUser = (req, res, next)=>{
         Location: "http://" + req.headers["host"] + "/user"
     });
 }
+exports.postSearch = async (req, res) => {
+    const condition = {
+        FullName: {
+            $regex: req.body.searchUser,
+            $options: 'i'
+        }
+    };
+    if (req.body.searchUser=== '') {
+        return res.redirect('/user');
+    }
+    const searchFind = await UserModel.find(condition);
+    console.log(searchFind);
+    if (searchFind.length > 0) {
+        return res.render('./user/user', {
+            user: searchFind,
+            msg: `<h6 class="alert alert-success">Tìm được người dùng có tên: ${req.body.searchUser}</h6>`
+        });
+    } else {
+        return res.render('./user/user', {
+            msg: `<h6 class="alert alert-danger">Không tìm thấy</h6>`
+        });
+    }
+};
+
 
 
 
