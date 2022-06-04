@@ -18,8 +18,13 @@ router.get('/user',function (req,res,next) {
         }
     )
 });
+//comic
 router.get('/Comics', ApiController.getComicsList);
-router.get('/Comics/:id', ApiController.getComics);
+router.get('/Comics/:id', ApiController.getComic);
+router.get('/ComicUp/:id', ApiController.getComicsListUserUp);
+
+
+//user
 router.get('/user/profile',auth,ApiController.getProfile );
 router.post('/login', ApiController.postLogin);
 router.post('/reg',ApiController.postReg);

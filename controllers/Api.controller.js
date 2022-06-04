@@ -2,15 +2,35 @@ const comicsModel = require("../models/comics.models");
 const User = require("../models/user.models");
 
 const bcrypt = require("bcrypt");
+//comic
 exports.getComicsList = async (req, res, next) => {
-    const comicsList = await comicsModel.find({});
+    const comicsList = await comicsModel.find({TrangThai : true});
     console.log(comicsList);
     res.send(comicsList);
 }
-exports.getComics = async (req, res, next) => {
+
+exports.getComic = async (req, res, next) => {
     const comics = await comicsModel.findById(req.params.id);
     res.send(comics);
 }
+exports.postUpComic = async (req, res, next) => {
+    try {
+        const comic = new comicsModel(req.body);
+        await comic.save();
+        res.status(201).send({ comic});
+    } catch (error) {
+        console.log(error);
+        res.status(400).send(error);
+    }
+}
+exports.getComicsListUserUp = async (req, res, next) => {
+    const comicsList = await comicsModel.find({IDUserUp: req.params.id});
+    console.log(comicsList);
+    res.send(comicsList);
+}
+
+
+//user
 exports.postReg = async (req, res, next) => {
     try {
         const salt = bcrypt.genSaltSync(10);

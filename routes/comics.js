@@ -8,11 +8,16 @@ var uploadLogo = multer( { dest: './tmp/'});
 
 router.get('/',AuthMiddleware.YeuCauDangNhap,comicsController.getComicsList)
 router.post('/add',uploadLogo.single('Logo'),comicsController.postAddComic)
-router.post('/edit',uploadLogo.single('UpdateLogo'),comicsController.postUpdateComics)
+// router.post('/update',uploadLogo.single('UpdateLogo'),comicsController.postUpdateComics)
+router.post('/update',comicsController.postUpdateComics)
 router.post('/delete',comicsController.postDeleteComics)
+router.post('/search',comicsController.postSearchComic)
 
 
-var uploader = multer( { dest: './tmp/'});
-router.post('/add-content',uploader.array('AddContentImage'),comicsController.postAddContent)
+
+router.get('/view/:id',comicsController.getViewComic);
+router.post('/view/:id',comicsController.postViewComic);
+// var uploader = multer( { dest: './tmp/'});
+// router.post('/add-content',uploader.array('AddContentImage'),comicsController.postAddContent)
 
 module.exports = router;

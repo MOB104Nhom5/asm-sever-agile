@@ -10,9 +10,11 @@ router.get('/',AuthMiddleware.YeuCauDangNhap,comicsController.getComicsListChuaD
 router.post('/add',uploadLogo.single('Logo'),comicsController.postAddComic)
 router.post('/edit',uploadLogo.single('UpdateLogo'),comicsController.postUpdateComics)
 router.post('/delete',comicsController.postDeleteComics)
+router.post('/duyet',comicsController.postDuyetComics)
+router.post('/search',comicsController.postSearchComicChuaDuyet)
 
+router.get('/view/:id',comicsController.getViewComicChuaDuyet);
+router.post('/view/:id',comicsController.postViewComicChuaDuyet);
 
-var uploader = multer( { dest: './tmp/'});
-router.post('/add-content',uploader.array('AddContentImage'),comicsController.postAddContent)
 
 module.exports = router;

@@ -56,7 +56,8 @@ exports.postAddUser = async (req,res,next)=>{
     });
     res.redirect('/user');
 }
-exports.postUpdateUser = async (req,res,next)=>{;
+exports.postUpdateUser = async (req,res,next)=>{
+
     let dieuKien = {_id: req.body.UpdateID};
     const role = req.body.UpdateRole;
     const salt = await bcrypt.genSalt(10);
