@@ -21,7 +21,8 @@ router.get('/user',function (req,res,next) {
 //comic
 router.get('/Comics', ApiController.getComicsList);
 router.get('/Comics/:id', ApiController.getComic);
-router.get('/ComicUp/:id', ApiController.getComicsListUserUp);
+router.get('/ComicsUp/:id', ApiController.getComicsListUserUp);
+router.post('/Comic/up', ApiController.postUpComic);
 
 
 //user
