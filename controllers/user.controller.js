@@ -13,7 +13,7 @@ exports.postAddUser = async (req,res,next)=>{
     let role = req.body.AddRole;
     const imageDirPath = resolve(__dirname, '../tmp');
     const files = fs.readdirSync(imageDirPath);
-    var newNameDir = req.body.FullName.toLowerCase().replace(" ", "_")
+    var newNameDir = req.body.FullName.toLowerCase().replaceAll(" ", "_")
     var dir = './public/uploads/' + newNameDir;
 
     if (!fs.existsSync(dir)) {
@@ -151,7 +151,46 @@ exports.postSearch = async (req, res) => {
             msg: `<h6 class="alert alert-danger">Không tìm thấy</h6>`
         });
     }
-};
+}
+
+exports.postUpdateAvatar = async (req, res, next) => {
+    const user = await UserModel.findOne({_id:req.body.idUpdateAvartar});
+    const imageDirPath = resolve(__dirname, '../tmp');
+    console.log(user)
+    const files = fs.readdirSync(imageDirPath);
+    let dieuKien = {_id: user._id};
+
+    var newNameDir = "avatar"
+    var dir = './public/uploads/' + newNameDir;
+
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir);
+
+    } else {
+        console.log("Directory already exist");
+    }
+    fs.rename(
+        req.file.destination + req.file.filename,
+        './public/uploads/' + newNameDir + '/' + "avatar_" + user._id + ".png",
+        err => console.log(err)
+    );
+    let linkAvatar = "/uploads/" + newNameDir +'/' + "avatar_" + user._id + ".png";
+
+    const duLieu = {
+        Avatar: linkAvatar,
+    };
+
+    UserModel.findByIdAndUpdate(dieuKien, duLieu, function (err, res) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("sửa thành công");
+        }
+
+    });
+    return res.redirect('/user');
+
+}
 
 
 

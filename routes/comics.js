@@ -9,7 +9,7 @@ var uploadLogo = multer( { dest: './tmp/'});
 
 router.get('/',AuthMiddleware.YeuCauDangNhap,comicsController.getComicsList)
 router.post('/add',uploadLogo.single('Logo'),comicsController.postAddComic)
-// router.post('/update',uploadLogo.single('UpdateLogo'),comicsController.postUpdateComics)
+router.post('/UpdateLogo',uploadLogo.single('LogoUpdate'),comicsController.postUpdateLogo)
 router.post('/update',comicsController.postUpdateComics)
 router.post('/delete',comicsController.postDeleteComics)
 router.post('/search',comicsController.postSearchComic)

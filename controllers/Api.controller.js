@@ -114,6 +114,7 @@ exports.postReg = async (req, res, next) => {
 }
 
 exports.postLogin = async (req, res, next) => {
+    console.log(req.body)
     try {
         const user = await User.findByCredentials(req.body.Email, req.body.Password);
         if (!user) {
@@ -122,7 +123,7 @@ exports.postLogin = async (req, res, next) => {
             });
         }
         const token = await user.generateAuthToken();
-        res.status(200).send({ user, message: "Login success"});
+        res.status(200).send({ user,token, message: "Login success"});
     } catch (error) {
         res.status(400).send(error);
     }
@@ -163,6 +164,7 @@ exports.postEditPassword = async (req,res,next)=>{
 }
 exports.postLogout = async  (req,res,next)=>{
     try {
+
         req.user.tokens = req.user.tokens.filter((token) => {
             return token.token != req.token
         })

@@ -1,9 +1,11 @@
 <script>
-    function editComics(id, Name, Author, Description,TT) {
+    function editComics(id, Name, Author, Category, DateUp, Description, TT) {
         document.getElementById("UpdateComicID").value = id;
         document.getElementById("UpdateComicName").value = Name;
         document.getElementById("updateAuthor").value = Author;
-        document.getElementById("updateDescription").value = Description+"";
+        document.getElementById("updateCategory").value = Category;
+        document.getElementById("updateDateUp").value = DateUp;
+        document.getElementById("updateDescription").value = Description + "";
         if (TT.toString() === "true") {
             document.getElementById("updateTT").value = "true";
         } else {
@@ -19,8 +21,11 @@
     function deleteComics(id) {
         document.getElementById("DpInputID").value = id;
     }
-</script>
 
+    function updateLogo(id) {
+        document.getElementById("idUpdateLogo").value = id;
+    }
+</script>
 
 
 <div class="content">
@@ -35,7 +40,8 @@
     {{/if}}
     <div style="width: 100%">
         <form action="/comics/search" class="d-flex mb-4 mt-3" method="POST" style="width: 500px;margin: auto">
-            <input class="form-control me-2" type="search" placeholder="Tìm kiếm truyện" aria-label="Search" name="searchComic">
+            <input class="form-control me-2" type="search" placeholder="Tìm kiếm truyện" aria-label="Search"
+                   name="searchComic">
             <button class="btn btn-outline-success" type="submit" style="width: 150px">Tìm Kiếm</button>
         </form>
     </div>
@@ -64,15 +70,24 @@
                         Quản lý chương truyện
                     </a></th>
                     <th scope="col" class="text-success">Đã Duyệt</th>
+                    <th scope="col" class="text-success">
+                        <button type="button"
+                                class="btn btn-primary mb-1"
+                                data-bs-toggle="modal"
+                                data-bs-target="#updateLogoModal"
+                                onclick="updateLogo('{{this._id}}')">
+                            Sửa Logo
+                        </button>
+                    </th>
 
-                    <td class="col-1 text-center">
+                    <td class="col-2 text-center">
 
                         <button
                                 type="button"
-                                class="btn btn-primary mb-1"
+                                class="btn btn-primary"
                                 data-bs-toggle="modal"
                                 data-bs-target="#updateModal"
-                                onclick="editComics('{{this._id}}','{{this.Name}}' , '{{this.Author}}', '{{this.Description}}', '{{this.TrangThai}}')"
+                                onclick="editComics('{{this._id}}','{{this.Name}}' , '{{this.Author}}', '{{this.Category}}', '{{this.DateUp}}', '{{this.Description}}', '{{this.TrangThai}}')"
                         >
                             Sửa
                         </button>
@@ -159,7 +174,7 @@
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="Category" class="col-sm-12 col-form-label">Thể loại
-                                        <p class="text-danger">(lưu ý mỗi thể loại cách nhau bằng dấu ";")</p></label>
+                                        <p class="text-danger">( lưu ý mỗi thể loại cách nhau bằng dấu "," )</p></label>
                                     <div class="col-sm-12">
                                         <input
                                                 name="Category"
@@ -189,7 +204,7 @@
                                               name="Description" required></textarea>
                                 </div>
                                 <div class="mb-1 row ">
-                                    <label class="col-sm-3 col-form-label" >Tình trạng</label>
+                                    <label class="col-sm-3 col-form-label">Tình trạng</label>
                                     <div class="col-sm-9 col-form-label form-select-lg">
                                         <label>
                                             <select id="idTTAdd" name="TTAdd">
@@ -264,13 +279,10 @@
                                                 class="form-control text-dark"
                                                 id="UpdateComicName"
                                                 placeholder="Name Comic"
+                                                required
                                         />
                                     </div>
                                 </div>
-<!--                                <div class="mb-3">-->
-<!--                                    <label for="formFile" class="form-label">Logo</label>-->
-<!--                                    <input class="form-control" type="file" id="updateLogo" name="updateLogo">-->
-<!--                                </div>-->
                                 <div class="mb-3 row">
                                     <label for="InputAuthor" class="col-sm-3 col-form-label">Tác giả</label>
                                     <div class="col-sm-9">
@@ -280,18 +292,42 @@
                                                 class="form-control text-dark"
                                                 id="updateAuthor"
                                                 placeholder="author"
+                                                required
                                         />
                                     </div>
                                 </div>
-
+                                <div class="mb-3 row">
+                                    <label for="updateCategory" class="col-sm-12 col-form-label">Thể loại
+                                        <p class="text-danger">(lưu ý mỗi thể loại cách nhau bằng dấu ",")</p></label>
+                                    <div class="col-sm-12">
+                                        <input
+                                                name="updateCategory"
+                                                type="text"
+                                                class="form-control text-dark"
+                                                id="updateCategory"
+                                                placeholder="Thể loại"
+                                                required
+                                        />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label
+                                            for="AddDate"
+                                            class="col-sm-3 col-form-label"
+                                    >Ngày đăng</label>
+                                    <div class="col-sm-9"><input type="date" id="updateDateUp" name="updateDateUp"
+                                                                 class="form-control text-dark"
+                                                                 required>
+                                    </div>
+                                </div>
 
                                 <div class="mb-3">
                                     <label for="InputDescription" class="form-label">Mô tả</label>
                                     <textarea class="form-control" id="updateDescription"
-                                              name="updateDescription"></textarea>
+                                              name="updateDescription" required></textarea>
                                 </div>
                                 <div class="mb-1 row ">
-                                    <label class="col-sm-3 col-form-label" >Tình trạng</label>
+                                    <label class="col-sm-3 col-form-label">Tình trạng</label>
                                     <div class="col-sm-9 col-form-label form-select-lg">
                                         <label>
                                             <select id="updateTT" name="updateTT">
@@ -369,6 +405,68 @@
                                             class="btn btn-primary"
                                             data-bs-dismiss="modal"
                                     >Xóa
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--update logo-->
+        <div
+                class="modal fade"
+                id="updateLogoModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <form action="/comics/UpdateLogo" method="post" autocomplete="off" accept-charset="UTF-8"
+                      enctype="multipart/form-data">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Sửa Logo!</h5>
+                            <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-auto">
+                                <div class="mb-3 row">
+                                    <label for="idUpdateLogo" class="col-sm-2 col-form-label">ID:</label>
+                                    <div class="col-sm-10">
+                                        <input
+                                                readonly
+                                                name="idUpdateLogo"
+                                                type="text"
+                                                class="form-control text-dark"
+                                                id="idUpdateLogo"
+                                                placeholder="ID"
+                                        />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="formFile" class="form-label">Logo</label>
+                                        <input class="form-control" type="file" id="InputLogo" name="LogoUpdate" required>
+                                    </div>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button
+                                            type="button"
+                                            class="btn btn-secondary"
+                                            data-bs-dismiss="modal"
+                                    >Đóng
+                                    </button>
+                                    <button
+                                            type="submit"
+                                            class="btn btn-primary"
+                                            data-bs-dismiss="modal"
+                                    >Sửa
                                     </button>
                                 </div>
                             </div>

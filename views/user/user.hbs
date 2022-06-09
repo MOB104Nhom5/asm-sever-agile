@@ -31,6 +31,9 @@
         document.getElementById("InfoGT").value = GT;
         document.getElementById("InfoDate").value = DateOfBirth;
     }
+    function updateLogo(id) {
+        document.getElementById("idUpdateAvartar").value = id;
+    }
 </script>
 <div class="content">
     <div style="width: 100%">
@@ -46,7 +49,6 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">ID</th>
                 <th scope="col">Họ và tên</th>
                 <th scope="col">Email</th>
                 <th scope="col">Quyền hạn</th>
@@ -56,7 +58,6 @@
             <tbody>
             {{#each user}}
                 <tr>
-                    <td>{{this._id}}</td>
                     <td>{{this.FullName}}</td>
                     <td>{{this.Email}}</td>
                     <td>{{this.Role}}</td>
@@ -69,15 +70,30 @@
                                     ,'{{this.Role}}','{{this.PhoneNumber}}','{{this.GT}}','{{this.DateOfBirth}}')">
                         Xem thông tin chi tiết
                     </button></td>
-                    <td>
+                    <td class="col-2"><button
+                            type="button"
+                            class="btn btn-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#UpdateModal"
+                            onclick="editUser('{{this._id}}','{{this.FullName}}','{{this.Email}}','{{this.Role}}','{{this.PhoneNumber}}','{{this.GT}}','{{this.DateOfBirth}}')"
+                    >
+                        Sửa
+                    </button>
+                        <button type="button"
+                                class="btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#updateLogoModal"
+                                onclick="updateLogo('{{this._id}}')">
+                            Sửa Avatar  </button></td>
+                    <td class="col-2">
                         <button
                                 type="button"
                                 class="btn btn-primary"
                                 data-bs-toggle="modal"
-                                data-bs-target="#UpdateModal"
-                                onclick="editUser('{{this._id}}','{{this.FullName}}','{{this.Email}}','{{this.Role}}','{{this.PhoneNumber}}','{{this.GT}}','{{this.DateOfBirth}}')"
+                                data-bs-target="#RePass"
+                                onclick="rePass('{{this._id}}')"
                         >
-                            Sửa
+                            Đổi mật khẩu
                         </button>
                         <button
                                 type="button"
@@ -88,15 +104,7 @@
                         >
                             Xóa
                         </button>
-                        <button
-                                type="button"
-                                class="btn btn-primary"
-                                data-bs-toggle="modal"
-                                data-bs-target="#RePass"
-                                onclick="rePass('{{this._id}}')"
-                        >
-                            Đổi mật khẩu
-                        </button>
+
                     </td>
                 </tr>
             {{/each}}
@@ -549,8 +557,8 @@
                         </div>
                         <div class="modal-body">
                             <div class="col-auto">
-                                <div class="mb-3 row">
-                                    <img style="width: 50px;height: 50px" src="" class="card-img-top card-img-top mt-2" id="InfoAvatar">
+                                <div class="mb-3 row" style="width: 100%;">
+                                    <img style="width: 100px;height: 100px;margin: auto" src="" class="card-img-top card-img-top mt-2" id="InfoAvatar">
                                 </div>
                                 <div class="mb-3 row">
                                     <label
@@ -631,5 +639,67 @@
                 </form>
             </div>
         </div>
+        <!--update avatar-->
+        <div
+                class="modal fade"
+                id="updateLogoModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <form action="/user/UpdateAvatar" method="post" autocomplete="off" accept-charset="UTF-8" enctype="multipart/form-data">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Sửa Logo!</h5>
+                            <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-auto">
+                                <div class="mb-3 row">
+                                    <label for="idUpdateAvartar" class="col-sm-2 col-form-label">ID:</label>
+                                    <div class="col-sm-10">
+                                        <input
+                                                readonly
+                                                name="idUpdateAvartar"
+                                                type="text"
+                                                class="form-control text-dark"
+                                                id="idUpdateAvartar"
+                                                placeholder="ID"
+                                        />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="formFile" class="form-label">Logo</label>
+                                        <input class="form-control" type="file" id="UpdateAvartar" name="UpdateAvartar" required>
+                                    </div>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button
+                                            type="button"
+                                            class="btn btn-secondary"
+                                            data-bs-dismiss="modal"
+                                    >Đóng
+                                    </button>
+                                    <button
+                                            type="submit"
+                                            class="btn btn-primary"
+                                            data-bs-dismiss="modal"
+                                    >Sửa
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </div>
 </div>

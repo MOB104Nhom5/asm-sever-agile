@@ -22,7 +22,7 @@ exports.postAddComic = async (req, res, next) => {
     const imageDirPath = resolve(__dirname, '../tmp');
     const files = fs.readdirSync(imageDirPath);
 
-    var newNameDir = req.body.Name.toLowerCase().replace(" ", "_")
+    var newNameDir = req.body.Name.toLowerCase().replaceAll(" ", "_")
     var dir = './public/uploads/' + newNameDir;
 
     if (!fs.existsSync(dir)) {
@@ -38,7 +38,7 @@ exports.postAddComic = async (req, res, next) => {
         err => console.log(err)
     );
     var nameLogo = "/uploads/" + newNameDir + '/' + "logo_" + newNameDir + ".png";
-    let Categorys =  req.body.Category.split(";")
+    let Categorys =  req.body.Category.split(",")
     console.log(Categorys)
     const objComic = new comicsModel({
         Name: req.body.Name,
@@ -62,13 +62,87 @@ exports.postAddComic = async (req, res, next) => {
     res.redirect('/comics');
 
 }
+exports.postUpdateLogo = async (req, res, next) => {
+    const comic = await comicsModel.findOne({_id:req.body.idUpdateLogo});
+    const imageDirPath = resolve(__dirname, '../tmp');
+    const files = fs.readdirSync(imageDirPath);
+    let dieuKien = {_id: comic._id};
+    console.log(comic)
+    var newNameDir = comic.Name.toLowerCase().replaceAll(" ", "_")
+    var dir = './public/uploads/' + newNameDir;
+
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir);
+
+    } else {
+        console.log("Directory already exist");
+    }
+
+    fs.rename(
+        req.file.destination + req.file.filename,
+        './public/uploads/' + newNameDir + '/' + "logo_" + newNameDir + ".png",
+        err => console.log(err)
+    );
+    var nameLogo = "/uploads/" + newNameDir + '/' + "logo_" + newNameDir + ".png";
+
+    const duLieu = {
+        Logo: nameLogo,
+    };
+
+    comicsModel.findByIdAndUpdate(dieuKien, duLieu, function (err, res) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("sửa thành công");
+        }
+
+    });
+    return res.redirect('/comics');
+
+}
+exports.postUpdateLogoChuaDuyet = async (req, res, next) => {
+    const comic = await comicsModel.findOne({_id:req.body.idUpdateLogo});
+    const imageDirPath = resolve(__dirname, '../tmp');
+    const files = fs.readdirSync(imageDirPath);
+    let dieuKien = {_id: comic._id};
+
+    var newNameDir = comic.Name.toLowerCase().replaceAll(" ", "_")
+    var dir = './public/uploads/' + newNameDir;
+
+    if (!fs.existsSync(dir)) {        fs.mkdirSync(dir);
+
+    } else {
+        console.log("Directory already exist");
+    }
+
+    fs.rename(
+        req.file.destination + req.file.filename,
+        './public/uploads/' + newNameDir + '/' + "logo_" + newNameDir + ".png",
+        err => console.log(err)
+    );
+    var nameLogo = "/uploads/" + newNameDir + '/' + "logo_" + newNameDir + ".png";
+
+    const duLieu = {
+        Logo: nameLogo,
+    };
+
+    comicsModel.findByIdAndUpdate(dieuKien, duLieu, function (err, res) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("sửa thành công");
+        }
+
+    });
+    return res.redirect('/comics_c');
+
+}
 
 exports.postUpdateComics = async (req, res, next) => {
     let dieuKien = {_id: req.body.UpdateComicID1};
 
     let duLieu = {
         Name: req.body.UpdateComicName,
-        // Logo: nameUpdateLogo,
         Author: req.body.updateAuthor,
         Description: req.body.updateDescription,
         TrangThai: req.body.updateTT,
@@ -78,7 +152,6 @@ exports.postUpdateComics = async (req, res, next) => {
             console.log(err);
         } else {
             console.log("sửa thành công");
-            console.log(req)
         }
 
     });
