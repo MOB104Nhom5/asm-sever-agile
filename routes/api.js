@@ -18,11 +18,17 @@ router.get('/user',function (req,res,next) {
         }
     )
 });
+
 //comic
 router.get('/Comics', ApiController.getComicsList);
-router.get('/Comics/:id', ApiController.getComic);
-router.get('/ComicsUp/:id', ApiController.getComicsListUserUp);
-router.post('/Comic/up', ApiController.postUpComic);
+router.get('/Comics/:id', ApiController.getComic);// lấy được cả truyện lẫn chap truyện
+router.get('/ComicsUp/:id', ApiController.getComicsListUserUp); // lấy những truyện mà người dùng đã up lên
+router.post('/Comic/up', ApiController.postUpComic);// up truyện
+router.post('/Comic/up/chapter', ApiController.postUpComicChapter);// up chapter truyện
+//tìm kiếm
+router.post('/Comic/search', ApiController.postSearchComic);// tìm kiếm truyện theo tên
+router.post('/Comic/searchCategory', ApiController.postSearchComicByCategory);// tìm kiếm truyện
+
 
 
 //user

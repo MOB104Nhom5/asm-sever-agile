@@ -9,12 +9,10 @@ const UserModel = require("../models/user.models");
 exports.getComicsList = async (req, res, next) => {
     const comicsList = await comicsModel.find({TrangThai : true});
     res.render('./comics/comics', {comics: comicsList});
-    console.log(req.body);
 }
 exports.getComicsListChuaDuyet = async (req, res, next) => {
     const comicsList = await comicsModel.find({TrangThai : false});
     res.render('./comics/comics-chuaDuyet', {comics: comicsList});
-    console.log(req.body);
 }
 
 
@@ -40,11 +38,14 @@ exports.postAddComic = async (req, res, next) => {
         err => console.log(err)
     );
     var nameLogo = "/uploads/" + newNameDir + '/' + "logo_" + newNameDir + ".png";
-
+    let Categorys =  req.body.Category.split(";")
+    console.log(Categorys)
     const objComic = new comicsModel({
         Name: req.body.Name,
         Logo: nameLogo,
+        DateUp:req.body.DateUp,
         Author: req.body.Author,
+        Category: Categorys,
         Description: req.body.Description,
         TrangThai: req.body.TTAdd,
     });
@@ -63,8 +64,6 @@ exports.postAddComic = async (req, res, next) => {
 }
 
 exports.postUpdateComics = async (req, res, next) => {
-    console.log(req.body.UpdateComicID1);
-    console.log(req.body.value);
     let dieuKien = {_id: req.body.UpdateComicID1};
 
     let duLieu = {
@@ -122,76 +121,6 @@ exports.postDuyetComics = (req, res, next) => {
     res.redirect('/comics_c');
 }
 
-exports.getViewComic = async (req, res, next) => {
-    console.log(req.params)
-
-    let itemBook = await BookModel.findById(req.params.id)
-        .exec()
-        .catch(function (err) {
-            console.log(err)
-        })
-    console.log(itemBook)
-    if (itemBook == null) {
-        res.send('k tim duoc ban gi')
-    }
-    res.render('./book/edit-book', {itemBook: itemBook})
-}
-exports.postViewComic = (req, res, next) => {
-    console.log(req.body)
-    let dieu_kien = {
-        _id: req.params.id
-    }
-
-    let du_lieu = {
-        name: req.body.book_name,
-        price: Number(req.body.book_price),
-        author: req.body.book_author,
-        upload_multer: "http://localhost:3000/uploads/" + req.file.originalname,
-
-    }
-    BookModel.updateOne(dieu_kien, du_lieu, function (err, res) {
-        if (err) {
-            res.send('loi cap nhap' + err.message)
-        }
-    })
-    res.redirect('/book/book-manager')
-}
-
-exports.getViewComicChuaDuyet = async (req, res, next) => {
-    console.log(req.params)
-
-    let Comic = await comicsModel.findById(req.params.id)
-        .exec()
-        .catch(function (err) {
-            console.log(err)
-        })
-    console.log(itemBook)
-    if (Comic == null) {
-        res.send('k tim duoc ban gi')
-    }
-    res.render('./comics/view', {Comic: Comic})
-}
-exports.postViewComicChuaDuyet = (req, res, next) => {
-    console.log(req.body)
-    let dieu_kien = {
-        _id: req.params.id
-    }
-
-    let du_lieu = {
-        name: req.body.book_name,
-        price: Number(req.body.book_price),
-        author: req.body.book_author,
-        upload_multer: "http://localhost:3000/uploads/" + req.file.originalname,
-
-    }
-    BookModel.updateOne(dieu_kien, du_lieu, function (err, res) {
-        if (err) {
-            res.send('loi cap nhap' + err.message)
-        }
-    })
-    res.redirect('/book/book-manager')
-}
-
 exports.postSearchComic = async (req, res) => {
     const condition = {
         Name: {
@@ -215,6 +144,8 @@ exports.postSearchComic = async (req, res) => {
         });
     }
 };
+
+
 exports.postSearchComicChuaDuyet = async (req, res) => {
     const condition = {
         Name: {

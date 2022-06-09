@@ -7,11 +7,6 @@ const comicsSchema = new mongoose.Schema({
     Category:[String],
     Description: String,
     TrangThai:Boolean,
-    Chapter:[{
-        NumberOfChapter:String,
-        NameOfChapter:String,
-        Content:String,
-    },],
     Like:[String],
     DateUp:String,
     IDUserUp:String,

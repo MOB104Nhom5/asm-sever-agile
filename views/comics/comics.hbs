@@ -57,15 +57,12 @@
                     <th scope="col"><img style="width: 50px;height: 50px" src="{{this.Logo}}"
                                          class="card-img-top card-img-top mt-2" alt="{{this.Name}}"></th>
                     <th scope="col">{{this.Author}}</th>
-                    <th scope="col"><button
-                            type="button"
+                    <th scope="col"><a
                             class="btn btn-primary mb-1"
-                            data-bs-toggle="modal"
-                            data-bs-target="#AddContentModal"
-                            onclick="addContentComics('{{this._id}}','{{this.Name}}')"
+                            href="comics/view/{{this._id}}"
                     >
                         Quản lý chương truyện
-                    </button></th>
+                    </a></th>
                     <th scope="col" class="text-success">Đã Duyệt</th>
 
                     <td class="col-1 text-center">
@@ -139,6 +136,7 @@
                                                 class="form-control text-dark"
                                                 id="InputName"
                                                 placeholder="Name Comic"
+                                                required
                                         />
                                     </div>
                                 </div>
@@ -154,8 +152,33 @@
                                                 type="text"
                                                 class="form-control text-dark"
                                                 id="InputAuthor"
-                                                placeholder="author"
+                                                placeholder="Tác giả"
+                                                required
                                         />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="Category" class="col-sm-12 col-form-label">Thể loại
+                                        <p class="text-danger">(lưu ý mỗi thể loại cách nhau bằng dấu ";")</p></label>
+                                    <div class="col-sm-12">
+                                        <input
+                                                name="Category"
+                                                type="text"
+                                                class="form-control text-dark"
+                                                id="Category"
+                                                placeholder="Thể loại"
+                                                required
+                                        />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label
+                                            for="AddDate"
+                                            class="col-sm-3 col-form-label"
+                                    >Ngày đăng</label>
+                                    <div class="col-sm-9"><input type="date" id="DateUp" name="DateUp"
+                                                                 class="form-control text-dark"
+                                                                 required>
                                     </div>
                                 </div>
 
@@ -163,7 +186,7 @@
                                 <div class="mb-3">
                                     <label for="InputDescription" class="form-label">Mô tả</label>
                                     <textarea class="form-control" id="Description"
-                                              name="Description"></textarea>
+                                              name="Description" required></textarea>
                                 </div>
                                 <div class="mb-1 row ">
                                     <label class="col-sm-3 col-form-label" >Tình trạng</label>

@@ -1,6 +1,6 @@
 const comicsModel = require("../models/comics.models");
 const User = require("../models/user.models");
-
+const chaptersModel = require("../models/chapter.models")
 const bcrypt = require("bcrypt");
 //comic
 exports.getComicsList = async (req, res, next) => {
@@ -10,12 +10,15 @@ exports.getComicsList = async (req, res, next) => {
 }
 
 exports.getComic = async (req, res, next) => {
-    const comics = await comicsModel.findById(req.params.id);
-    res.send(comics);
+    const comic = await comicsModel.findById(req.params.id);
+    const chapters = await chaptersModel.find({idComic: comic._id});
+
+    res.send({comic,chapters});
 }
 exports.postUpComic = async (req, res, next) => {
     try {
         const comic = new comicsModel(req.body);
+        comic.Category = req.body.Category.split(";")
         await comic.save();
         res.status(201).send({ comic});
     } catch (error) {
@@ -23,12 +26,66 @@ exports.postUpComic = async (req, res, next) => {
         res.status(400).send(error);
     }
 }
+exports.postUpComicChapter = async (req, res, next) => {
+    try {
+        const chaptersModel = new chaptersModel(req.body);
+        await chaptersModel.save();
+        res.status(201).send({ chaptersModel});
+    } catch (error) {
+        console.log(error);
+        res.status(400).send(error);
+    }
+}
 exports.getComicsListUserUp = async (req, res, next) => {
     const comicsList = await comicsModel.find({IDUserUp: req.params.id});
-    console.log(comicsList);
+    console.log(req.params.id);
     res.send(comicsList);
 }
+// postSearchComic
+exports.postSearchComic= async (req, res, next) => {
 
+    try {
+        let comicsList= await comicsModel.find({});
+        const condition = {
+            Name: {
+                $regex: req.body.searchComic,
+                $options: 'i'
+            }
+        };
+        const searchFind = await comicsModel.find(condition);
+        if (searchFind.length > 0) {
+            res.send(searchFind);
+        }else {
+             res.send("Không tìm thấy");
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(400).send(error);
+    }
+
+}
+exports.postSearchComicByCategory= async (req, res, next) => {
+
+    try {
+        let comicsList= await comicsModel.find({});
+        const condition = {
+            Category: {
+                $regex: req.body.searchComic,
+                $options: 'i'
+            }
+        };
+        const searchFind = await comicsModel.find(condition);
+        if (searchFind.length > 0) {
+            res.send(searchFind);
+        }else {
+             res.send("Không tìm thấy");
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(400).send(error);
+    }
+
+}
 
 //user
 exports.postReg = async (req, res, next) => {
