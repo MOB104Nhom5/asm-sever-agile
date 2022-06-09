@@ -22,12 +22,18 @@ router.get('/user',function (req,res,next) {
 //comic
 router.get('/Comics', ApiController.getComicsList);
 router.get('/Comics/:id', ApiController.getComic);// lấy được cả truyện lẫn chap truyện
-router.get('/ComicsUp/:id', ApiController.getComicsListUserUp); // lấy những truyện mà người dùng đã up lên
+router.get('/ListComicUp/:id', ApiController.getComicsListUserUp); // lấy list  những truyện mà người dùng đã up lên
+router.get('/ComicUp/:id', ApiController.getComicUserUp); // lấy truyện và list chapter của truyện mà người dùng up lên
+router.get('/ComicUp/chapter/:id', ApiController.getChapterUserUp); // lấy chapter mà người dùng up lên
+
+
 router.post('/Comic/up', ApiController.postUpComic);// up truyện
 router.post('/Comic/up/chapter', ApiController.postUpComicChapter);// up chapter truyện
+router.post('/ComicUp/chapter/:id/delete', ApiController.getChapterUserUp); // xóa chapter mà người dùng up lên
+router.get('/ComicUp/chapter/:id/update', ApiController.getChapterUserUp); // sửa chapter mà người dùng up lên
 //tìm kiếm
 router.post('/Comic/search', ApiController.postSearchComic);// tìm kiếm truyện theo tên
-router.post('/Comic/searchCategory', ApiController.postSearchComicByCategory);// tìm kiếm truyện
+router.post('/Comic/searchCategory', ApiController.postSearchComicByCategory);// tìm kiếm truyện theo thể loại
 
 
 

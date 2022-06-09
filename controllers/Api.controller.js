@@ -38,10 +38,21 @@ exports.postUpComicChapter = async (req, res, next) => {
 }
 exports.getComicsListUserUp = async (req, res, next) => {
     const comicsList = await comicsModel.find({IDUserUp: req.params.id});
-    console.log(req.params.id);
     res.send(comicsList);
 }
-// postSearchComic
+exports.getComicUserUp = async (req, res, next) => {
+    const comic = await comicsModel.find(req.params.id);
+    const chapters = await chaptersModel.find({idComic: comic._id});
+
+    res.send({comic,chapters});
+}
+exports.getChapterUserUp = async (req, res, next) => {
+    const chapter = await chaptersModel.find(req.params.id);
+
+    res.send(chapter);
+}
+
+// tim kiem
 exports.postSearchComic= async (req, res, next) => {
 
     try {
