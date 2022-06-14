@@ -24,9 +24,5 @@ exports.postRegister = async (req,res,next)=>{
             console.log("đăng kí thành công và đã ghi vào db")
         }
     })
-    return res.render('./user/login', {
-        msg: '<div class="alert alert-success" role="alert">\n' +
-            ' Đăng kí thành công' +
-            '</div>'
-    });
+    return res.redirect('/login');
 }
