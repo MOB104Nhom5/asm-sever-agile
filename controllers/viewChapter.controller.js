@@ -77,6 +77,7 @@ exports.postSearchChapter = async (req, res) => {
             console.log(err)
         })
     const condition = {
+        idComic: idComic,
         NumberOfChapter: {
             $regex: req.body.searchChapter,
             $options: 'i'
@@ -86,6 +87,8 @@ exports.postSearchChapter = async (req, res) => {
         return res.redirect('/comics/view/'+idComic);
     }
     const searchFind = await chaptersModel.find(condition);
+    // var new_searchFind = searchFind.filter((item) => item._id == idComic );
+
     if (searchFind.length > 0) {
         return res.render('./comics/viewChapter', {
             chapters: searchFind,

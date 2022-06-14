@@ -118,13 +118,7 @@
             </button>
         </div>
         <!--  add-->
-        <div
-                class="modal fade"
-                id="exampleModal"
-                tabindex="-1"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-        >
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
             <div class="modal-dialog">
 
                 <form action="/comics/add" method="POST" autocomplete="off" accept-charset="UTF-8"
@@ -157,7 +151,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="formFile" class="form-label">Logo</label>
-                                    <input class="form-control" type="file" id="InputLogo" name="Logo">
+                                    <input class="form-control" type="file" id="InputLogo" name="Logo" required>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="InputAuthor" class="col-sm-3 col-form-label">Tác giả</label>
@@ -227,7 +221,6 @@
                             <button
                                     type="submit"
                                     class="btn btn-primary"
-                                    data-bs-dismiss="modal"
                             >Thêm
                             </button>
                         </div>
@@ -350,7 +343,7 @@
                             <button
                                     type="submit"
                                     class="btn btn-primary"
-                                    data-bs-dismiss="modal"
+
                             >Sửa
                             </button>
                         </div>
@@ -385,7 +378,7 @@
                                     <div class="col-sm-10">
                                         <input
                                                 readonly
-                                                name="DpInputID"
+                                                name="DlIDComic"
                                                 type="text"
                                                 class="form-control text-dark"
                                                 id="DpInputID"
@@ -465,7 +458,6 @@
                                     <button
                                             type="submit"
                                             class="btn btn-primary"
-                                            data-bs-dismiss="modal"
                                     >Sửa
                                     </button>
                                 </div>

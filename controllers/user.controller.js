@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const UserModel = require("../models/user.models");
 const {resolve} = require("path");
 const fs = require("fs");

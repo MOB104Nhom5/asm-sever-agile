@@ -1,5 +1,5 @@
 const User = require("../models/user.models");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 exports.register=(req,res,next)=>{res.render('./user/register')}
 exports.postRegister = async (req,res,next)=>{
     if(req.body.password !== req.body.passwordCF){
@@ -24,5 +24,9 @@ exports.postRegister = async (req,res,next)=>{
             console.log("đăng kí thành công và đã ghi vào db")
         }
     })
-    res.redirect('/login')
+    return res.render('./user/login', {
+        msg: '<div class="alert alert-success" role="alert">\n' +
+            ' Đăng kí thành công' +
+            '</div>'
+    });
 }

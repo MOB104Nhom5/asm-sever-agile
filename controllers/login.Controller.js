@@ -1,6 +1,6 @@
 const User = require("../models/user.models");
 
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 exports.login = (req, res, next) => {
     res.render('./user/login')
@@ -14,13 +14,24 @@ exports.loginPost = async (req, res, next) => {
                 req.session.user = user;
                 res.redirect('/index');
             } else if (user.Role === "User") {
-                res.redirect("/login");
+                return res.render('./user/login', {
+                    msg: '<div class="alert alert-danger" role="alert">\n' +
+                        ' Tài khoản này không có quyền' +
+                        '</div>'
+                });
             }
         } else {
-            res.redirect('/login');
+            return res.render('./user/login', {
+                msg: '<div class="alert alert-danger" role="alert">\n' +
+                    ' Sai mật khẩu' +
+                    '</div>', body: req.body
+            });
         }
-        console.log(validPassword + " " + " " + user.Password + " " + req.body.loginpassword);
     } else {
-        res.status(401).json({error: "Không tồn tại user"});
+        return res.render('./user/login', {
+            msg: '<div class="alert alert-danger" role="alert">\n' +
+                'Không tìm thấy user' +
+                '</div>',
+        });
     }
 }

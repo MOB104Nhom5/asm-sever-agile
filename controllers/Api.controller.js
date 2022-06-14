@@ -1,7 +1,7 @@
 const comicsModel = require("../models/comics.models");
 const User = require("../models/user.models");
 const chaptersModel = require("../models/chapter.models")
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 //comic
 exports.getComicsList = async (req, res, next) => {
     const comicsList = await comicsModel.find({TrangThai : true});

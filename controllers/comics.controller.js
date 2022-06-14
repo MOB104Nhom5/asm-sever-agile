@@ -3,8 +3,10 @@ var fs = require('fs');
 const {readdirSync, rename} = require('fs');
 const {resolve} = require('path');
 var mkdirp = require('mkdirp');
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const UserModel = require("../models/user.models");
+const chapterModel = require("../models/chapter.models");
+
 
 exports.getComicsList = async (req, res, next) => {
     const comicsList = await comicsModel.find({TrangThai : true});
@@ -161,7 +163,7 @@ exports.postUpdateComics = async (req, res, next) => {
 exports.postDeleteComics = (req, res, next) => {
 
     let dieu_kien = {
-        _id: req.body.DpInputID
+        _id: req.body.DlIDComic
     }
 
     comicsModel.deleteOne(dieu_kien, function (err) {
@@ -169,6 +171,13 @@ exports.postDeleteComics = (req, res, next) => {
             console.log(err)
         } else {
             console.log('Delete Successful')
+        }
+    })
+    chapterModel.deleteMany({idComic: req.body.DlIDComic}, function (err) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log('Xóa truyện + chapter thành công')
         }
     })
     res.redirect('/comics');
