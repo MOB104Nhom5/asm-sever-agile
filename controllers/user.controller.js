@@ -107,10 +107,15 @@ exports.postUpdatePass = async (req,res,next)=>{
             console.log("Success");
         }
     });
-    res.redirect('/user');
-}
-exports.postDeleteUser = (req, res, next)=>{
 
+    return res.render('./user/user', {
+        msg: '<div class="alert alert-success" role="alert">\n' +
+            ' Đổi mật khẩu thành công' +
+            '</div>', user: listUser
+    });
+}
+exports.postDeleteUser =async (req, res, next)=>{
+    const listUser = await UserModel.find({});
     let dieu_kien = {
         _id : req.body.DpInputID
     }
@@ -124,10 +129,7 @@ exports.postDeleteUser = (req, res, next)=>{
             console.log('xóa thành công')
         }
     })
-    res.redirect('/user');
-    res.writeHead(301, {
-        Location: "http://" + req.headers["host"] + "/user"
-    });
+    return res.redirect('/user')
 }
 exports.postSearch = async (req, res) => {
     const condition = {
