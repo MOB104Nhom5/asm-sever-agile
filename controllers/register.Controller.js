@@ -3,7 +3,9 @@ const bcrypt = require("bcryptjs");
 exports.register=(req,res,next)=>{res.render('./user/register')}
 exports.postRegister = async (req,res,next)=>{
     if(req.body.password !== req.body.passwordCF){
-        return res.render('./user/register.hbs',{msg:'Mat khau khong trung khop', body: req.body});
+        return res.render('./user/register.hbs',{msg: '<div class="alert alert-danger" role="alert">\n' +
+                'Đăng kí thất bại!Do nhập lại mật khẩu không trùng khớp' +
+                '</div>', body: req.body});
     }
     var role= "User";
     const salt = await bcrypt.genSalt(10);
