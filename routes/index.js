@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
+var AuthMiddleware = require('../middleware/auth.midllware')
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/',AuthMiddleware.YeuCauDangNhap, function(req, res, next) {
   res.render('index');
 });
 router.post("/", (req, res) => {
