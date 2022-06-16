@@ -34,6 +34,8 @@ router.get('/ComicUp/chapter/:id/update', ApiController.getChapterUserUp); // s�
 //tìm kiếm
 router.post('/Comic/search', ApiController.postSearchComic);// tìm kiếm truyện theo tên
 router.post('/Comic/searchCategory', ApiController.postSearchComicByCategory);// tìm kiếm truyện theo thể loại
+// xếp hạng
+router.get('/ComicRanking', ApiController.getComicRanking);//sắp xếp giảm dần theo like
 
 
 

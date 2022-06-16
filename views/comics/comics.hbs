@@ -25,6 +25,10 @@
     function updateLogo(id) {
         document.getElementById("idUpdateLogo").value = id;
     }
+    function sortComic(comics) {
+       return  comics.sort({'Like':-1});
+    }
+
 </script>
 
 <header>
@@ -74,6 +78,15 @@
             <button class="btn btn-outline-success" type="submit" style="width: 150px">Tìm Kiếm</button>
         </form>
     </div>
+    <div class="row" style="margin: auto;width: 500px">
+        <button
+                type="button"
+                class="btn btn-primary"
+                onclick="sortComic('{{#each comics}}{{/each}}')"
+        >
+            Sắp xếp theo yêu thích
+        </button>
+    </div>
     <div class="row" style="display: contents;">
         <table class="table">
             <thead>
@@ -81,6 +94,7 @@
                 <th scope="col">Tên Truyện</th>
                 <th scope="col">Logo</th>
                 <th scope="col">Tác Giả</th>
+                <th scope="col">Yêu thích</th>
                 <th scope="col">Chương truyện</th>
                 <th scope="col">Trạng Thái</th>
             </tr>
@@ -92,6 +106,7 @@
                     <th scope="col"><img style="width: 50px;height: 50px" src="{{this.Logo}}"
                                          class="card-img-top card-img-top mt-2" alt="{{this.Name}}"></th>
                     <th scope="col">{{this.Author}}</th>
+                    <th scope="col">{{this.Like}}</th>
                     <th scope="col"><a
                             class="btn btn-primary mb-1"
                             href="comics/view/{{this._id}}"

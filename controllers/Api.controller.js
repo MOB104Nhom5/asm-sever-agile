@@ -2,10 +2,16 @@ const comicsModel = require("../models/comics.models");
 const User = require("../models/user.models");
 const chaptersModel = require("../models/chapter.models")
 const bcrypt = require("bcryptjs");
+//xếp hạng
+exports.getComicRanking = async (req, res, next) => {
+    const comicsList = await comicsModel.find({TrangThai : true}).sort({'Like':-1});
+    res.send(comicsList);
+}
+
 //comic
 exports.getComicsList = async (req, res, next) => {
     const comicsList = await comicsModel.find({TrangThai : true});
-    console.log(comicsList);
+
     res.send(comicsList);
 }
 

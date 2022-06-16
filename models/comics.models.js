@@ -7,7 +7,7 @@ const comicsSchema = new mongoose.Schema({
     Category:[String],
     Description: String,
     TrangThai:Boolean,
-    Like:[String],
+    Like:Number,
     DateUp:String,
     IDUserUp:String,
 

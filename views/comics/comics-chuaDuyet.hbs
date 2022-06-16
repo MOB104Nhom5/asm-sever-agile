@@ -71,7 +71,9 @@
             <button class="btn btn-outline-success" type="submit" style="width: 150px">Tìm Kiếm</button>
         </form>
     </div>
+
     <div class="row" style="display: contents;">
+
         <table class="table">
             <thead>
             <tr>
@@ -87,8 +89,9 @@
                 <tr>
                     <th scope="col">{{this.Name}}</th>
                     <th scope="col"><img style="width: 50px;height: 50px" src="{{this.Logo}}"
-                                         class="card-img-top card-img-top mt-2" alt="{{this.Name}}"></th>
+                                         class="card-img-top card-img-top mt-2" ></th>
                     <th scope="col">{{this.Author}}</th>
+                    <th scope="col">{{this.Like}}</th>
                     <th scope="col"><a
                             class="btn btn-primary mb-1"
                             href="comics/view/{{this._id}}"
