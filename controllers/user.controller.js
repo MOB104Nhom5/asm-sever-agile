@@ -10,6 +10,8 @@ exports.getUserList= async (req,res,next)=>{
 }
 exports.postAddUser = async (req,res,next)=>{
     const listUser = await UserModel.find({});
+    const listUserChecked = await UserModel.find({Email: req.body.Email});
+
     let role = req.body.AddRole;
     const imageDirPath = resolve(__dirname, '../tmp');
     const files = fs.readdirSync(imageDirPath);
@@ -35,6 +37,11 @@ exports.postAddUser = async (req,res,next)=>{
         return res.render('./user/user',{msg:'<div class="alert alert-danger" role="alert">\n' +
                 ' Thêm thất bại! Do nhập lại mật khaảu không trùng khớp' +
                 '</div>', body: req.body,user :listUser});
+    }
+    if (listUserChecked.length >= 1){
+        return res.render('./user/user',{msg: '<div class="alert alert-danger" role="alert">\n' +
+                'Thêm thất bại!Do email này đã được sử dụng' +
+                '</div>',  body: req.body,user :listUser});
     }
     const objUser = new UserModel({
         FullName: req.body.FullName,
@@ -74,7 +81,7 @@ exports.postUpdateUser = async (req,res,next)=>{
             console.log(err);
         }
         else {
-            console.log("Success");
+            console.log("Sửa thành công");
         }
 
     });

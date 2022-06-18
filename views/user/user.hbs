@@ -69,7 +69,7 @@
 
     <div style="width: 100%">
         <form action="/user/search" class="d-flex mb-4 mt-3" method="POST" style="width: 500px;margin: auto" autocomplete="off">
-            <input  class="form-control me-2" type="search" placeholder="Tìm kiếm người dùng" aria-label="Search" name="searchUser">
+            <input  class="form-control me-2" type="search" placeholder="Tìm kiếm người dùng (theo tên)" aria-label="Search" name="searchUser">
             <button class="btn btn-outline-success" type="submit" style="width: 150px">Tìm Kiếm</button>
         </form>
     </div>
@@ -685,7 +685,7 @@
                 <form action="/user/UpdateAvatar" method="post" autocomplete="off" accept-charset="UTF-8" enctype="multipart/form-data">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Sửa Logo!</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Đổi Avatar!</h5>
                             <button
                                     type="button"
                                     class="btn-close"
@@ -708,7 +708,7 @@
                                         />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="formFile" class="form-label">Logo</label>
+                                        <label for="formFile" class="form-label">Avatar</label>
                                         <input class="form-control" type="file" id="UpdateAvartar" name="UpdateAvartar" required>
                                     </div>
 
