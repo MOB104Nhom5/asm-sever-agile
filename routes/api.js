@@ -26,7 +26,7 @@ router.get('/ListComicUp/:id', ApiController.getComicsListUserUp); // lấy list
 router.get('/ComicUp/:id', ApiController.getComicUserUp); // lấy truyện và list chapter của truyện mà người dùng up lên
 router.get('/ComicUp/chapter/:id', ApiController.getChapterUserUp); // lấy chapter mà người dùng up lên
 
-
+// người dùng up truyện
 router.post('/Comic/up', ApiController.postUpComic);// up truyện
 router.post('/Comic/up/chapter', ApiController.postUpComicChapter);// up chapter truyện
 router.post('/ComicUp/chapter/:id/delete', ApiController.getChapterUserUp); // xóa chapter mà người dùng up lên

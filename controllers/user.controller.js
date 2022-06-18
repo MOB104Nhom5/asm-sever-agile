@@ -16,13 +16,8 @@ exports.postAddUser = async (req,res,next)=>{
     const files = fs.readdirSync(imageDirPath);
     var newNameDir = req.body.FullName.toLowerCase().replaceAll(" ", "_")
     var dir = './public/uploads/' + newNameDir;
-
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir);
-
-    } else {
-        console.log("Directory already exist");
-    }
+    if (!fs.existsSync(dir)) { fs.mkdirSync(dir);} else {
+        console.log("Directory already exist");}
     fs.rename(
         req.file.destination + req.file.filename,
         './public/uploads/' + newNameDir + '/' + "avatar_" + newNameDir + ".png",
@@ -35,13 +30,11 @@ exports.postAddUser = async (req,res,next)=>{
     if(req.body.Password !== req.body.CPassword){
         return res.render('./user/user',{msg:'<div class="alert alert-danger" role="alert">\n' +
                 ' Thêm thất bại! Do nhập lại mật khaảu không trùng khớp' +
-                '</div>', body: req.body,user :listUser});
-    }
+                '</div>', body: req.body,user :listUser});}
     if (listUserChecked.length >= 1){
         return res.render('./user/user',{msg: '<div class="alert alert-danger" role="alert">\n' +
                 'Thêm thất bại!Do email này đã được sử dụng' +
-                '</div>',  body: req.body,user :listUser});
-    }
+                '</div>',  body: req.body,user :listUser});}
     const objUser = new UserModel({
         FullName: req.body.FullName,
         Email: req.body.Email,
@@ -53,15 +46,12 @@ exports.postAddUser = async (req,res,next)=>{
         PhoneNumber:req.body.SDT,
     });
     await objUser.save(function (err) {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            console.log("Thêm thành công!");
-        }
+        if (err) {console.log(err);}
+        else { console.log("Thêm thành công!");}
     });
     res.redirect('/user');
 }
+
 exports.postUpdateUser = async (req,res,next)=>{
 
     let dieuKien = {_id: req.body.UpdateID};

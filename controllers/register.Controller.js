@@ -1,8 +1,6 @@
 const User = require("../models/user.models");
 const bcrypt = require("bcryptjs");
 const UserModel = require("../models/user.models");
-
-
 exports.register=(req,res,next)=>{res.render('./user/register')}
 exports.postRegister = async (req,res,next)=>{
     const listUser = await UserModel.find({Email: req.body.Email});
@@ -16,7 +14,6 @@ exports.postRegister = async (req,res,next)=>{
                 'Đăng kí thất bại!Do email này đã được sử dụng' +
                 '</div>', body: req.body});
     }
-
     var role= "User";
     const salt = await bcrypt.genSalt(10);
     let objUser = {
@@ -28,7 +25,6 @@ exports.postRegister = async (req,res,next)=>{
         PhoneNumber:req.body.SDT,
         Role: role,
     }
-    // ghi vào CSDL:
     await User.create(objUser,function (err){
         if(err)
             console.log(err)

@@ -6,8 +6,6 @@ var mkdirp = require('mkdirp');
 const bcrypt = require("bcryptjs");
 const UserModel = require("../models/user.models");
 const chapterModel = require("../models/chapter.models");
-
-
 exports.getComicsList = async (req, res, next) => {
     const comicsList = await comicsModel.find({TrangThai : true});
     res.render('./comics/comics', {comics: comicsList});
@@ -17,23 +15,15 @@ exports.getComicsListChuaDuyet = async (req, res, next) => {
     res.render('./comics/comics-chuaDuyet', {comics: comicsList});
 }
 
-
-
 exports.postAddComic = async (req, res, next) => {
     const comicsList = await comicsModel.find({});
     const imageDirPath = resolve(__dirname, '../tmp');
     const files = fs.readdirSync(imageDirPath);
-
     var newNameDir = req.body.Name.toLowerCase().replaceAll(" ", "_")
     var dir = './public/uploads/' + newNameDir;
-
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
-
-    } else {
-        console.log("Directory already exist");
-    }
-
+    } else {console.log("Directory already exist");}
     fs.rename(
         req.file.destination + req.file.filename,
         './public/uploads/' + newNameDir + '/' + "logo_" + newNameDir + ".png",
@@ -60,9 +50,7 @@ exports.postAddComic = async (req, res, next) => {
 
         }
     });
-
     res.redirect('/comics');
-
 }
 exports.postUpdateLogo = async (req, res, next) => {
     const comic = await comicsModel.findOne({_id:req.body.idUpdateLogo});
@@ -161,11 +149,9 @@ exports.postUpdateComics = async (req, res, next) => {
 }
 
 exports.postDeleteComics = (req, res, next) => {
-
     let dieu_kien = {
         _id: req.body.DlIDComic
     }
-
     comicsModel.deleteOne(dieu_kien, function (err) {
         if (err) {
             console.log(err)
