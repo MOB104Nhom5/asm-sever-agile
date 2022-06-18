@@ -11,7 +11,6 @@ exports.getUserList= async (req,res,next)=>{
 exports.postAddUser = async (req,res,next)=>{
     const listUser = await UserModel.find({});
     const listUserChecked = await UserModel.find({Email: req.body.Email});
-
     let role = req.body.AddRole;
     const imageDirPath = resolve(__dirname, '../tmp');
     const files = fs.readdirSync(imageDirPath);
