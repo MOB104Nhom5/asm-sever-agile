@@ -39,7 +39,9 @@ exports.postAddComic = async (req, res, next) => {
         Author: req.body.Author,
         Category: Categorys,
         Description: req.body.Description,
+        Content: req.body.Content,
         TrangThai: req.body.TTAdd,
+
     });
 
     await objComic.save(function (err) {

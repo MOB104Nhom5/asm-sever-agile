@@ -1,11 +1,12 @@
 <script>
-    function editComics(id, Name, Author, Category, DateUp, Description, TT) {
+    function editComics(id, Name, Author, Category, DateUp, Description, TT,Content) {
         document.getElementById("UpdateComicID").value = id;
         document.getElementById("UpdateComicName").value = Name;
         document.getElementById("updateAuthor").value = Author;
         document.getElementById("updateCategory").value = Category;
         document.getElementById("updateDateUp").value = DateUp;
         document.getElementById("updateDescription").value = Description + "";
+        document.getElementById("updateContent").value = Content + "";
         if (TT.toString() === "true") {
             document.getElementById("updateTT").value = "true";
         } else {
@@ -122,7 +123,7 @@
                                 class="btn btn-primary"
                                 data-bs-toggle="modal"
                                 data-bs-target="#updateModal"
-                                onclick="editComics('{{this._id}}','{{this.Name}}' , '{{this.Author}}', '{{this.Category}}', '{{this.DateUp}}', '{{this.Description}}', '{{this.TrangThai}}')"
+                                onclick="editComics('{{this._id}}','{{this.Name}}' , '{{this.Author}}', '{{this.Category}}', '{{this.DateUp}}', '{{this.Description}}', '{{this.TrangThai}}', '{{this.Content}}')"
                         >
                             Sửa
                         </button>
@@ -231,6 +232,11 @@
                                     <label for="InputDescription" class="form-label">Mô tả</label>
                                     <textarea class="form-control" id="Description"
                                               name="Description" required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="InputDescription" class="form-label">Nộ dung</label>
+                                    <textarea class="form-control" id="Content"
+                                              name="Content" required></textarea>
                                 </div>
                                 <div class="mb-1 row ">
                                     <label class="col-sm-3 col-form-label">Tình trạng</label>
@@ -353,6 +359,11 @@
                                     <label for="InputDescription" class="form-label">Mô tả</label>
                                     <textarea class="form-control" id="updateDescription"
                                               name="updateDescription" required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="InputDescription" class="form-label">Nộ dung</label>
+                                    <textarea class="form-control" id="updateContent"
+                                              name="updateContent" required></textarea>
                                 </div>
                                 <div class="mb-1 row ">
                                     <label class="col-sm-3 col-form-label">Tình trạng</label>

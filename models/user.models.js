@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://thopham02hp:thogia100502@cluster0.5g5ri.mongodb.net/Agile').then(r => {
+mongoose.connect('mongodb+srv://thopham02hp:thogia100502@cluster0.5g5ri.mongodb.net/AndroidNetworking').then(r => {
     console.log('Connected to MongoDB');
 }).catch(e => {
     console.log('Error: ', e);
